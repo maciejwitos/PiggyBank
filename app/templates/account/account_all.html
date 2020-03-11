@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <table>
+        <tr>
+            <td>Nazwa</td>
+            <td>Bank</td>
+            <td>Stan konta</td>
+            <td>Waluta</td>
+        </tr>
+        {% for account in accounts %}
+            <tr>
+                <td>{{ account.name }}</td>
+                <td>{{ account.bank }}</td>
+                <td>{{ account.balance }}</td>
+                <td>{{ account.currency }}</td>
+            <td><a href="/account/delete/{{ account.id }}/">Usuń</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+    <a href="{% url "add-account" %}">Dodaj konto</a>
+{% endblock %}

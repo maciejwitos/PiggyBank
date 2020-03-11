@@ -1,0 +1,95 @@
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css/">
+</head>
+
+<div id="sidebar">
+    <div class="toggle-button">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <ul>
+        <li>Home</li>
+        <li>Credit</li>
+        <li>Exit</li>
+    </ul>
+
+</div>
+
+<body>
+    <div class="box">
+    <table border='1'>
+    <thead>Kategorie</thead>
+        <tr>
+            <th>Kategoria</th>
+            <th>Wydane</th>
+        </tr>
+        {% for category in categorys %}
+        <tr>
+            <td>{{ category.name }}</td>
+            <td>{{ category.spending }}&nbsp;zł</td>
+        </tr>
+        {% endfor %}
+    </table>
+    </div>
+    <div>
+        <table border="1">
+        <thead>Waluty</thead>
+            <tr>
+                <th>Waluta</th>
+                <th>*/PLN</th>
+            </tr>
+            {% for currency in currencys %}
+            <tr>
+                <td>{{ currency.name }}</td>
+                <td>{{ currency.in_pln }}&nbsp;zł</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div>
+        <table border="1">
+        <thead>Transakcje</thead>
+            <tr>
+                <th>Data</th>
+                <th>Kwota</th>
+                <th>Cel</th>
+                <th>Kategoria</th>
+                <th>Bank</th>
+            </tr>
+            {% for transaction in transactions %}
+            <tr>
+                <td>{{ transaction.date }}</td>
+                <td>{{ transaction.amount }}</td>
+                <td>{{ transaction.comment }}</td>
+                <td>{{ transaction.category.name }}</td>
+                <td>{{ transaction.account.name }}</td>
+            </tr>
+            {% endfor %}
+            <td>Suma: </td>
+            <td>{{ total }}</td>
+        </table>
+        <a href="/transaction/new/">Dodaj transakcję</a>
+    </div>
+    <div>
+        <table border="1">
+        <thead>Konta</thead>
+            <tr>
+                <th>Konto</th>
+                <th>Saldo</th>
+                <th>Waluta</th>
+                <th>Bank</th>
+            </tr>
+            {% for account in accounts %}
+            <tr>
+                <td>{{ account.name }}</td>
+                <td>{{ account.balance }}</td>
+                <td>{{ account.currency.name }}</td>
+                <td>{{ account.bank }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>

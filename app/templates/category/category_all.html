@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <table>
+    <tr>
+        <td>Kategoria</td>
+        <td>Wydane</td>
+    </tr>
+    {% for category in categories %}
+    <tr>
+        <td>{{ category.name }}</td>
+        <td>{{ category.spending }}</td>
+        <td><a href="/category/delete/{{ category.id }}/">Usuń</a></td>
+    </tr>
+    {% endfor %}
+    </table>
+    <a href="{% url "add-category" %}">Dodaj kategorię</a>
+{% endblock %}

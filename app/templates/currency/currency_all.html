@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <table>
+        <tr>
+            <td>Nazwa</td>
+            <td>Kurs</td>
+        </tr>
+        {% for cur in currency %}
+            <tr>
+                <td>{{ cur.name }}</td>
+                <td>{{ cur.in_pln }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <a href="{% url "add-currency" %}">Dodaj konto</a>
+{% endblock %}

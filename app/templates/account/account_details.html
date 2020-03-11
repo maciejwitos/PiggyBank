@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <table>
+        <tr>
+            <td>Nazwa</td>
+            <td>Bank</td>
+            <td>Stan konta</td>
+            <td>Waluta</td>
+        </tr>
+            <tr>
+                <td>{{ account.name }}</td>
+                <td>{{ account.bank }}</td>
+                <td>{{ account.balance }}</td>
+                <td>{{ account.currency }}</td>
+            </tr>
+    </table>
+    <a href="/account/delete/{{ account.pk }}">Usuń konto</a>
+{% endblock %}
