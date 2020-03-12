@@ -40,10 +40,27 @@ class UrlTest(TestCase):
         assert account.user == self.user
         assert account.bank == 'fake_bank'
 
+    def test_account_edit_url(self):
+        account = self.create_fake_account()
+        request = self.factory.post(f'/category/edit/{account.pk}/')
+        request.user = self.user
+        response = EditAccount.as_view()(request)
+        self.assertEqual(response.status_code, 200)
+
+    def test_account_edit_model(self):
+        account = self.create_fake_account()
+        assert account.name == 'fake_bank_name'
+        account.name = "new_fake_name"
+        assert account.name == "new_fake_name"
+
     def test_account_delete_url(self):
         account = self.create_fake_account()
-        request = self.factory.get('/account/delete/1')
-        request.user = self.user
+        request = self.factory.post(f'/account/delete/{account.pk}', data={'name': account.name,
+                                                                           'bank': account.bank,
+                                                                           'currency': account.currency,
+                                                                           'user': account.user,
+                                                                           'balance': account.balance})
+        request.user = account.user
         response = DeleteAccount.as_view()(request)
         self.assertEqual(response.status_code, 200)
 

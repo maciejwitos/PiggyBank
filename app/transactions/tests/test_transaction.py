@@ -39,11 +39,24 @@ class UrlTest(TestCase):
         assert transaction.date == '2020-03-03'
         assert transaction.amount == 150
 
+    def test_transaction_edit_model(self):
+        transaction = self.create_fake_transaction()
+        assert transaction.date == '2020-03-03'
+        transaction.name = '2020-10-10'
+        assert transaction.name == '2020-10-10'
+
+    def test_transaction_edit_url(self):
+        transaction = self.create_fake_transaction()
+        request = self.factory.post(f'/transaction/edit/{transaction.pk}/')
+        request.user = self.user
+        response = EditTransaction.as_view()(request)
+        self.assertEqual(response.status_code, 200)
+
     def test_transaction_delete_url(self):
         transaction = self.create_fake_transaction()
-        request = self.factory.get(f'/transaction/delete/{transaction.pk}/')
+        request = self.factory.post(f'/transaction/delete/{transaction.pk}/')
         request.user = self.user
-        response = DeleteCategory.as_view()(request)
+        response = DeleteTransaction.as_view()(request)
         self.assertEqual(response.status_code, 200)
 
     def test_transaction_delete_model(self):

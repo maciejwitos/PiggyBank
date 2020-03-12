@@ -34,6 +34,19 @@ class UrlTest(TestCase):
         assert currency.name == 'PLN'
         assert currency.in_pln == 1
 
+    def test_currency_edit_model(self):
+        currency = self.create_fake_currency()
+        assert currency.name == 'PLN'
+        currency.name = "GBP"
+        assert currency.name == "GBP"
+
+    def test_currency_edit_url(self):
+        currency = self.create_fake_currency()
+        request = self.factory.post(f'/transaction/edit/{currency.pk}/')
+        request.user = self.user
+        response = EditCurrency.as_view()(request)
+        self.assertEqual(response.status_code, 200)
+
     def test_currency_delete_url(self):
         currency = self.create_fake_currency()
         request = self.factory.get('/currency/delete/1')
