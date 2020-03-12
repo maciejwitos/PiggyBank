@@ -1,3 +1,5 @@
+from django.views.generic import UpdateView
+
 from app.user.user_config import *
 from app.accounts.accounts_forms import *
 
@@ -23,6 +25,7 @@ class AddAccount(LoginRequiredMixin, View):
             return redirect('all-account')
         return redirect('all-account')
 
+
 # Wyświetlanie wszystkich kont
 class ReadAccounts(LoginRequiredMixin, View):
     login_url = '/login/'
@@ -32,13 +35,13 @@ class ReadAccounts(LoginRequiredMixin, View):
         return render(request, 'account/account_all.html', {'accounts': accounts})
 
 
-# Wyświetlanie jednego konta
-class ReadOneAccount(LoginRequiredMixin, View):
+# Edycja konta
+class EditAccount(LoginRequiredMixin, UpdateView):
     login_url = '/login/'
 
-    def get(self, request, id):
-        account = Account.objects.get(id=id)
-        return render(request, 'account/account_details.html', {'account': account})
+    model = Account
+    fields = ('name', 'bank', 'currency', 'balance')
+    success_url = '/accounts/all/'
 
 
 # Usuwanie konta
@@ -46,4 +49,4 @@ class DeleteAccount(LoginRequiredMixin, DeleteView):
     login_url = '/login/'
 
     model = Account
-    success_url = reverse_lazy('/account/all/')
+    success_url = '/account/all/'

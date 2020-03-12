@@ -1,3 +1,5 @@
+from django.views.generic import UpdateView
+
 from app.user.user_config import *
 from app.category.category_forms import *
 
@@ -30,9 +32,17 @@ class ReadCategories(LoginRequiredMixin, View):
         return render(request, 'category/category_all.html', {'categories': categories})
 
 
+# Edytowanie kategorii
+class EditCategory(LoginRequiredMixin, UpdateView):
+    login_url = '/login/'
+    fields = ('name', 'spending')
+    model = Category
+    success_url = '/category/all/'
+
 # Usuwanie kategorii
 class DeleteCategory(LoginRequiredMixin, DeleteView):
     login_url = '/login/'
-
     model = Category
-    success_url = reverse_lazy('/category/all/')
+    template_name = 'confirm_delete.html'
+    success_url = '/category/all/'
+

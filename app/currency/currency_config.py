@@ -1,3 +1,5 @@
+from django.views.generic import UpdateView
+
 from app.user.user_config import *
 from app.currency.currency_form import *
 
@@ -26,6 +28,14 @@ class ReadCurrency(LoginRequiredMixin, View):
     def get(self, request):
         currency = Currency.objects.all()
         return render(request, 'currency/currency_all.html', {"currency": currency})
+
+
+class EditCurrency(LoginRequiredMixin, UpdateView):
+    login_url = '/login/'
+
+    model = Currency
+    fields = ('name', 'in_pln')
+    success_url = '/currency/all/'
 
 
 class DeleteCurrency(LoginRequiredMixin, DeleteView):

@@ -1,3 +1,5 @@
+from django.views.generic import UpdateView
+
 from app.transactions.transaction_form import AddTransactionForm
 from app.user.user_config import *
 
@@ -41,6 +43,14 @@ class ReadTransactions(LoginRequiredMixin, View):
     def get(self, request):
         transactions = Transaction.objects.filter(user=request.user.pk).order_by('-date')
         return render(request, 'transaction/transaction_all.html', {'transactions': transactions})
+
+
+class EditTransaction(LoginRequiredMixin, UpdateView):
+    login_url = '/login/'
+
+    model = Transaction
+    fields = ('date', 'amount', 'category', 'account', 'comment')
+    success_url = '/transaction/all/'
 
 
 # Usuwanie transakcji
