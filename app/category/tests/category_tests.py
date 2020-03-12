@@ -37,13 +37,9 @@ class UrlTest(TestCase):
 
     def test_category_delete_url(self):
         category = create_fake_category()
-        print(category.pk)
         request = self.factory.post(f'/category/delete/{category.pk}/')
-        print(request)
         request.user = self.user
-        print(request.content_params)
         response = DeleteCategory.as_view()(request)
-        print(request.content_params)
         self.assertEqual(response.status_code, 200)
 
     def test_category_delete_model(self):

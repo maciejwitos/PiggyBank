@@ -15,15 +15,16 @@
                 <td>{{ transaction.amount }}</td>
                 <td>{{ transaction.comment }}</td>
                 {% if transaction.category == None %}
-                <td>Usunięto</td>
+                    <td>Usunięto</td>
                 {% else %}
-                <td>{{ transaction.category }}</td>
+                    <td>{{ transaction.category }}</td>
                 {% endif %}
                 {% if transaction.account == None %}
-                <td>Usunięto</td>
+                    <td>Usunięto</td>
                 {% else %}
-                <td>{{ transaction.account }}</td>
+                    <td>{{ transaction.account }}</td>
                 {% endif %}
+                <td><a href="/transaction/edit/{{ transaction.id }}/">Edytuj</a></td>
                 <td><a href="/transaction/delete/{{ transaction.id }}/">Usuń</a></td>
             </tr>
         {% endfor %}

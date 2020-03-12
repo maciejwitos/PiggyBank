@@ -24,12 +24,12 @@ class Dashboard(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request):
-        categorys = Category.objects.all().order_by('-spending')
-        currencys = Currency.objects.all()
-        transactions = Transaction.objects.all().order_by('-date')
-        accounts = Account.objects.all().order_by('-balance')
-        return render(request, 'index.html', {'categorys': categorys,
-                                                  'currencys': currencys,
+        categories = Category.objects.filter(user=request.user).order_by('-spending')
+        currencies = Currency.objects.all()
+        transactions = Transaction.objects.filter(user=request.user).order_by('-date')
+        accounts = Account.objects.filter(user=request.user).order_by('-balance')
+        return render(request, 'dashboard.html', {'categories': categories,
+                                                  'currencies': currencies,
                                                   'transactions': transactions,
                                                   'accounts': accounts})
 

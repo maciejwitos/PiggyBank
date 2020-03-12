@@ -33,7 +33,9 @@ class AddTransaction(LoginRequiredMixin, View):
 
 
             return redirect('/transaction/all/')
-        return redirect('/transaction/add/')
+
+        form = AddTransactionForm(request.user, initial={'user': request.user})
+        return render(request, 'transaction/transaction_form.html', {'form': form})
 
 
 # Wypisanie wszystkich transakcji
@@ -66,15 +68,17 @@ class DeleteTransaction(LoginRequiredMixin, DeleteView):
     def delete(self, request, *args, **kwargs):
         # get data about deleted objects and related models
         transaction = Transaction.objects.get(id=kwargs['pk'])
-        bank_balance = transaction.account
-        category_spending = transaction.category
+        bank = transaction.account
+        category = transaction.category
         # delete object
         result = super().delete(request, *args, **kwargs)
         # refund for category and account balance
-        bank_balance.balance += transaction.amount
-        category_spending.spending -= transaction.amount
-        bank_balance.save()
-        category_spending.save()
+        if category is not None:
+            category.spending -= transaction.amount
+            category.save()
+        if bank is not None:
+            bank.balance += transaction.amount
+            bank.save()
 
         return result
 

@@ -28,6 +28,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('dashboard/', Dashboard.as_view(), name='dashboard'),
     path('index/', index),
+    path('', Dashboard.as_view()),
     path('accounts/', include('django.contrib.auth.urls')),
     path('register/', SignUp.as_view(), name='register-form'),
     path('login/', auth_views.LoginView.as_view(template_name='user/login.html'), name='login'),
@@ -68,6 +69,8 @@ urlpatterns = [
 
     path('currency/add/', AddCurrency.as_view(), name='add-currency'),
     path('currency/all/', ReadCurrency.as_view(), name='all-currency'),
-    path('currency/edit/<pk>/', EditCurrency.as_view(template_name='currency/currency_edit.html'), name='edit-currency')
+    path('currency/edit/<pk>/', EditCurrency.as_view(template_name='currency/currency_edit.html'), name='edit-currency'),
+    path('currency/delete/<pk>/', DeleteCurrency.as_view(template_name='confirm_delete.html', success_url='/currency/all'),
+         name='delete-currency'),
 
 ]
