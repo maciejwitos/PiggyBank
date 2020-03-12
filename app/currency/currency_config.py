@@ -27,3 +27,11 @@ class ReadCurrency(LoginRequiredMixin, View):
         currency = Currency.objects.all()
         return render(request, 'currency/currency_all.html', {"currency": currency})
 
+
+class DeleteCurrency(LoginRequiredMixin, DeleteView):
+    login_url = '/login/'
+
+    model = Currency
+    success_url = reverse_lazy('/currency/all/')
+
+

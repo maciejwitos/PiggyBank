@@ -1,4 +1,5 @@
-from app.tests import *
+from app.tests.tests import *
+
 
 class UrlTest(TestCase):
     def setUp(self):
@@ -7,23 +8,14 @@ class UrlTest(TestCase):
         self.user = User.objects.create_user(
             username='testuser', email='test@user.com', password='top_secret')
 
-    def test_transaction_all_url(self):
-        # Create an instance of a GET request.
-        request = self.factory.get('/transactions/all/')
-
-        # Recall that middleware are not supported. You can simulate a
-        # logged-in user by setting request.user manually.
-        request.user = self.user
-
-        # Or you can simulate an anonymous user by setting request.user to
-        # an AnonymousUser instance.
-        # request.user = AnonymousUser()
-
-        # Test my_view() as if it were deployed at /customer/details
-        # response = ReadTransactions(request)
-        # Use this syntax for class-based views.
-        response = ReadTransactions.as_view()(request)
-        self.assertEqual(response.status_code, 200)
+    def create_fake_transaction(self):
+        transaction = Transaction.objects.create(date='2020-03-03',
+                                                 user=self.user,
+                                                 account=create_fake_account(),
+                                                 category=create_fake_category(),
+                                                 comment='fake_comment',
+                                                 amount=150)
+        return transaction
 
     def test_transaction_add_url(self):
         request = self.factory.get('/transaction/add/')
@@ -31,20 +23,32 @@ class UrlTest(TestCase):
         response = AddTransaction.as_view()(request)
         self.assertEqual(response.status_code, 200)
 
+    def test_add_new_transaction_model(self):
+        length = Transaction.objects.count()
+        self.create_fake_transaction()
+        assert length + 1 == Transaction.objects.count()
+
+    def test_transaction_all_url(self):
+        request = self.factory.get('/transactions/all/')
+        request.user = self.user
+        response = ReadTransactions.as_view()(request)
+        self.assertEqual(response.status_code, 200)
+
+    def test_transaction_read_model(self):
+        transaction = self.create_fake_transaction()
+        assert transaction.date == '2020-03-03'
+        assert transaction.amount == 150
+
     def test_transaction_delete_url(self):
-        currency = Currency.objects.create(name='PLN',
-                                          in_pln=1)
-        category = Category.objects.create(name='Kate', user=self.user)
-        account = Account.objects.create(name='fake_bank_name',
-                               bank='fake_bank',
-                               balance=100,
-                               currency=currency)
-        transaction = Transaction.objects.create(date='2020-03-03',
-                                   user=self.user,
-                                   account=account,
-                                   category=category,
-                                   comment='fake_comment')
+        transaction = self.create_fake_transaction()
         request = self.factory.get(f'/transaction/delete/{transaction.pk}/')
         request.user = self.user
         response = DeleteCategory.as_view()(request)
         self.assertEqual(response.status_code, 200)
+
+    def test_transaction_delete_model(self):
+        length = Transaction.objects.count()
+        transaction = self.create_fake_transaction()
+        assert length + 1 == Transaction.objects.count()
+        transaction.delete()
+        assert length == 0
