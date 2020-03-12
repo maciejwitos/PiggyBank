@@ -3,7 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 .pytest_cache
-
+Final_Project AdminLTE/
 # C extensions
 *.so
 

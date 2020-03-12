@@ -39,6 +39,19 @@ class EditCategory(LoginRequiredMixin, UpdateView):
     model = Category
     success_url = '/category/all/'
 
+
+class DetailsCategory(LoginRequiredMixin, View):
+    login_url = '/login/'
+
+    def get(self, request, pk):
+        category = Category.objects.get(id=pk)
+        transactions = Transaction.objects.filter(category=category)
+        if not request.user.pk == category.user.pk:
+            return redirect('/404/')
+        return render(request, 'category/category_details.html', {'category': category,
+                                                                  'transactions': transactions})
+
+
 # Usuwanie kategorii
 class DeleteCategory(LoginRequiredMixin, DeleteView):
     login_url = '/login/'

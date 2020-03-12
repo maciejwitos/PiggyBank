@@ -29,6 +29,7 @@ urlpatterns = [
     path('dashboard/', Dashboard.as_view(), name='dashboard'),
     path('index/', index),
     path('', Dashboard.as_view()),
+    path('404/', View404.as_view(), name='404'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('register/', SignUp.as_view(), name='register-form'),
     path('login/', auth_views.LoginView.as_view(template_name='user/login.html'), name='login'),
@@ -47,6 +48,7 @@ urlpatterns = [
 
     path('category/add/', AddCategory.as_view(), name='add-category'),
     path('category/all/', ReadCategories.as_view(), name='all-category'),
+    path('category/details/<pk>/', DetailsCategory.as_view(), name='category-details'),
     path('category/edit/<pk>/', EditCategory.as_view(template_name='category/category_edit.html'),
          name='edit-category'),
     path('category/delete/<pk>/',
@@ -55,6 +57,7 @@ urlpatterns = [
 
     path('account/add/', AddAccount.as_view(), name='add-account'),
     path('account/all/', ReadAccounts.as_view(), name='all-account'),
+    path('account/details/<pk>/', DetailsAccount.as_view(), name='account-details'),
     path('account/edit/<pk>/', EditAccount.as_view(template_name='account/account_edit.html'), name='account-edit'),
     path('account/delete/<pk>/',
          DeleteAccount.as_view(template_name='confirm_delete.html', success_url='/account/all/'),

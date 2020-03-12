@@ -43,5 +43,3 @@ class DeleteCurrency(LoginRequiredMixin, DeleteView):
 
     model = Currency
     success_url = reverse_lazy('/currency/all/')
-
-

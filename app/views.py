@@ -28,8 +28,18 @@ class Dashboard(LoginRequiredMixin, View):
         currencies = Currency.objects.all()
         transactions = Transaction.objects.filter(user=request.user).order_by('-date')
         accounts = Account.objects.filter(user=request.user).order_by('-balance')
+        my_wealth = 0
+        for account in accounts:
+            balance = account.balance
+            balance_in_pln = balance * account.currency.in_pln
+            my_wealth += balance_in_pln
         return render(request, 'dashboard.html', {'categories': categories,
                                                   'currencies': currencies,
                                                   'transactions': transactions,
-                                                  'accounts': accounts})
+                                                  'accounts': accounts,
+                                                  'my_wealth': float(my_wealth)})
 
+class View404(View):
+
+    def get(self, request):
+        return render(request, '404.html')

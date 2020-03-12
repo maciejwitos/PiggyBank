@@ -50,3 +50,16 @@ class DeleteAccount(LoginRequiredMixin, DeleteView):
 
     model = Account
     success_url = '/account/all/'
+
+
+class DetailsAccount(LoginRequiredMixin, View):
+    login_url = '/login/'
+
+    def get(self, request, pk):
+        account = Account.objects.get(id=pk)
+        transactions = Transaction.objects.filter(account=account)
+        if not request.user.pk == account.user.pk:
+            return redirect('/404/')
+        return render(request, 'account/account_details.html', {'account': account,
+                                                                'transactions': transactions})
+
