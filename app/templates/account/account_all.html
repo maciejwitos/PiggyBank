@@ -1,23 +1,54 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <table>
-        <tr>
-            <td>Nazwa</td>
-            <td>Bank</td>
-            <td>Stan konta</td>
-            <td>Waluta</td>
-        </tr>
-        {% for account in accounts %}
-            <tr>
-                <td>{{ account.name }}</td>
-                <td>{{ account.bank }}</td>
-                <td>{{ account.balance }}</td>
-                <td>{{ account.currency }}</td>
-                <td><a href="/account/details/{{ account.id }}/">Szczegóły</a></td>
-                <td><a href="/account/delete/{{ account.id }}/">Usuń</a></td>
-            </tr>
-        {% endfor %}
-    </table>
-    <a href="{% url "add-account" %}">Dodaj konto</a>
+    <section class="content">
+        <div class="d-xl-table-row">
+            <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Wszystkie Konta</h3>
+
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="example2" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Nazwa</th>
+                                    <th>Bank</th>
+                                    <th>Saldo</th>
+                                    <th>Waluta</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for account in accounts %}
+                                    <tr>
+                                        <td>{{ account.name }}</td>
+                                        <td>{{ account.bank }}</td>
+                                        <td>{{ account.balance }}</td>
+                                        <td>{{account.currency}}</td>
+                                        <td><a href="/account/edit/{{ account.id }}/">Edytuj</a></td>
+                                        <td><a href="/account/delete/{{ account.id }}/">Usuń</a></td>
+                                    </tr>
+                                {% endfor %}
+                                <tfoot>
+                                <tr>
+                                    <th>Nazwa</th>
+                                    <th>Bank</th>
+                                    <th>Saldo</th>
+                                    <th>Waluta</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+            </div>
+        </div>
+    </section>
 {% endblock %}

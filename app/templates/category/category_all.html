@@ -1,19 +1,48 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <table>
-    <tr>
-        <td>Kategoria</td>
-        <td>Wydane</td>
-    </tr>
-    {% for category in categories %}
-    <tr>
-        <td>{{ category.name }}</td>
-        <td>{{ category.spending }}</td>
-        <td><a href="/category/details/{{ category.id }}/">Szczegóły</a></td>
-        <td><a href="/category/delete/{{ category.id }}/">Usuń</a></td>
-    </tr>
-    {% endfor %}
-    </table>
-    <a href="{% url "add-category" %}">Dodaj kategorię</a>
+    <section class="content">
+        <div class="d-xl-table-row">
+            <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Wszystkie Kategorie</h3>
+
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="example2" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Nazwa</th>
+                                    <th>Wydatki</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for category in categories %}
+                                    <tr>
+                                        <td>{{ category.name }}</td>
+                                        <td>{{ category.spending }}</td>
+                                        <td><a href="/category/edit/{{ category.id }}/">Edytuj</a></td>
+                                        <td><a href="/category/delete/{{ category.id }}/">Usuń</a></td>
+                                    </tr>
+                                {% endfor %}
+                                <tfoot>
+                                 <tr>
+                                    <th>Nazwa</th>
+                                    <th>Wydatki</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+            </div>
+        </div>
+    </section>
 {% endblock %}
