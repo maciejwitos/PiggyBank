@@ -13,7 +13,7 @@ class SignUp(View):
 
     def get(self, request):
         form = SigneUpForm()
-        return render(request, 'user/sign_up.html', {'form': form})
+        return render(request, 'user/register.html', {'form': form})
 
     def post(self, request):
         form = SigneUpForm(request.POST)
@@ -26,7 +26,7 @@ class SignUp(View):
             return redirect('/index/')
 
         form = SigneUpForm()
-        return render(request, 'user/sign_up.html', {'form': form})
+        return render(request, 'user/register.html', {'form': form})
 
 
 class UserDetails(LoginRequiredMixin, View):
