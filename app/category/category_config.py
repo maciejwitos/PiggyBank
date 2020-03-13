@@ -28,7 +28,7 @@ class ReadCategories(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request):
-        categories = Category.objects.filter(user=request.user.pk)
+        categories = Category.objects.filter(user=request.user.pk).order_by('-spending')
         return render(request, 'category/category_all.html', {'categories': categories})
 
 
@@ -45,7 +45,7 @@ class DetailsCategory(LoginRequiredMixin, View):
 
     def get(self, request, pk):
         category = Category.objects.get(id=pk)
-        transactions = Transaction.objects.filter(category=category)
+        transactions = Transaction.objects.filter(category=category).order_by('date')
         if not request.user.pk == category.user.pk:
             return redirect('/404/')
         return render(request, 'category/category_details.html', {'category': category,

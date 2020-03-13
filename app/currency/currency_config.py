@@ -26,8 +26,8 @@ class ReadCurrency(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request):
-        currency = Currency.objects.all()
-        return render(request, 'currency/currency_all.html', {"currency": currency})
+        currencies = Currency.objects.all()
+        return render(request, 'currency/currency_all.html', {"currencies": currencies})
 
 
 class EditCurrency(LoginRequiredMixin, UpdateView):

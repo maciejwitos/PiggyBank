@@ -31,7 +31,7 @@ class ReadAccounts(LoginRequiredMixin, View):
     login_url = '/login/'
 
     def get(self, request):
-        accounts = Account.objects.filter(user=request.user.pk)
+        accounts = Account.objects.filter(user=request.user.pk).order_by('name')
         return render(request, 'account/account_all.html', {'accounts': accounts})
 
 
