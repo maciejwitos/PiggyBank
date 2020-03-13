@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.views.generic import UpdateView
 
 from app.transactions.transaction_form import AddTransactionForm
@@ -53,6 +55,21 @@ class EditTransaction(LoginRequiredMixin, UpdateView):
     model = Transaction
     fields = ('date', 'amount', 'category', 'account', 'comment')
     success_url = '/transaction/all/'
+
+    def __init__(self, *args, **kwargs):
+        super(EditTransaction, self).__init__(*args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        transaction = Transaction.objects.get(id=kwargs['pk'])
+        print(transaction.category.spending)
+        transaction.category.spending -= transaction.amount
+        print(transaction.category.spending)
+        new_amount = float(self.request.POST.get('amount'))
+
+        transaction.category.spending += Decimal(new_amount)
+        print(transaction.category.spending)
+        transaction.category.save()
+        return super().post(request, *args, **kwargs)
 
 
 # Usuwanie transakcji
