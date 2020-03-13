@@ -41,7 +41,7 @@ class EditAccount(LoginRequiredMixin, UpdateView):
 
     model = Account
     fields = ('name', 'bank', 'currency', 'balance')
-    success_url = '/accounts/all/'
+    success_url = '/account/all/'
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
