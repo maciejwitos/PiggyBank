@@ -88,8 +88,10 @@ class DeleteTransaction(LoginRequiredMixin, DeleteView):
     model = Transaction
     success_url = reverse_lazy('/transaction/all/')
 
-    def __init__(self, *args, **kwargs):
-        super(DeleteTransaction, self).__init__(*args, **kwargs)
+    def get(self, request, *args, **kwargs):
+        if Transaction.objects.get(id=kwargs['pk']).user.pk == request.user.pk:
+            return super().get(request, *args, **kwargs)
+        return redirect('/404/')
 
     def delete(self, request, *args, **kwargs):
         # get data about deleted objects and related models

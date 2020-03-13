@@ -52,14 +52,6 @@ class EditAccount(LoginRequiredMixin, UpdateView):
         return redirect('/404/')
 
 
-# Usuwanie konta
-class DeleteAccount(LoginRequiredMixin, DeleteView):
-    login_url = '/login/'
-
-    model = Account
-    success_url = '/account/all/'
-
-
 class DetailsAccount(LoginRequiredMixin, View):
     login_url = '/login/'
 
@@ -70,4 +62,18 @@ class DetailsAccount(LoginRequiredMixin, View):
             return redirect('/404/')
         return render(request, 'account/account_details.html', {'account': account,
                                                                 'transactions': transactions})
+
+
+# Usuwanie konta
+class DeleteAccount(LoginRequiredMixin, DeleteView):
+    login_url = '/login/'
+
+    model = Account
+    success_url = '/account/all/'
+
+    def get(self, request, *args, **kwargs):
+        if Account.objects.get(id=kwargs['pk']).user.pk == request.user.pk:
+            return super().get(request, *args, **kwargs)
+        return redirect('/404/')
+
 

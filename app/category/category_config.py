@@ -64,3 +64,10 @@ class DeleteCategory(LoginRequiredMixin, DeleteView):
     template_name = 'confirm_delete.html'
     success_url = '/category/all/'
 
+    def get(self, request, *args, **kwargs):
+        if Category.objects.get(id=kwargs['pk']).user.pk == request.user.pk:
+            return super().get(request, *args, **kwargs)
+        return redirect('/404/')
+
+
+
