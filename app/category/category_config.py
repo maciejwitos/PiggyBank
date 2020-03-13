@@ -39,6 +39,11 @@ class EditCategory(LoginRequiredMixin, UpdateView):
     model = Category
     success_url = '/category/all/'
 
+    def get(self, request, *args, **kwargs):
+        if Category.objects.get(id=kwargs['pk']).user.pk == request.user.pk:
+            return super().get(request, *args, **kwargs)
+        return redirect('/404/')
+
 
 class DetailsCategory(LoginRequiredMixin, View):
     login_url = '/login/'

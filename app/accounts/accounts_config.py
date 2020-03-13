@@ -43,6 +43,14 @@ class EditAccount(LoginRequiredMixin, UpdateView):
     fields = ('name', 'bank', 'currency', 'balance')
     success_url = '/accounts/all/'
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        if Account.objects.get(id=kwargs['pk']).user.pk == request.user.pk:
+            return super().get(request, *args, **kwargs)
+        return redirect('/404/')
+
 
 # Usuwanie konta
 class DeleteAccount(LoginRequiredMixin, DeleteView):

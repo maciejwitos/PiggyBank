@@ -59,6 +59,11 @@ class EditTransaction(LoginRequiredMixin, UpdateView):
     def __init__(self, *args, **kwargs):
         super(EditTransaction, self).__init__(*args, **kwargs)
 
+    def get(self, request, *args, **kwargs):
+        if Transaction.objects.get(id=kwargs['pk']).user.pk == request.user.pk:
+            return super().get(request, *args, **kwargs)
+        return redirect('/404/')
+
     def post(self, request, *args, **kwargs):
         # get data about editing objects and related models
         transaction = Transaction.objects.get(id=kwargs['pk'])
