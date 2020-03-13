@@ -60,14 +60,18 @@ class EditTransaction(LoginRequiredMixin, UpdateView):
         super(EditTransaction, self).__init__(*args, **kwargs)
 
     def post(self, request, *args, **kwargs):
+        # get data about editing objects and related models
         transaction = Transaction.objects.get(id=kwargs['pk'])
-        print(transaction.category.spending)
+        # substract old amount from category spending and account balance
+        transaction.account.balance += transaction.amount
         transaction.category.spending -= transaction.amount
-        print(transaction.category.spending)
+        # take new amount from form
         new_amount = float(self.request.POST.get('amount'))
-
+        # add new amount to cateogry spending and account balance
         transaction.category.spending += Decimal(new_amount)
-        print(transaction.category.spending)
+        transaction.account.balance -= Decimal(new_amount)
+        # save models
+        transaction.account.save()
         transaction.category.save()
         return super().post(request, *args, **kwargs)
 
