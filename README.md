@@ -1,3 +1,5 @@
+* still in develop 
+
 # PiggyBank
 
 Is an app to manage you home budget with maximum customisation. Just create account and start using it. 
