@@ -11,7 +11,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <title>PiggyBank | Starter</title>
+    <title>TwojaŚwinka</title>
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{% static "plugins/fontawesome-free/css/all.min.css" %}">
@@ -31,10 +31,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="{% url "dashboard" %}" class="nav-link">Home</a>
+                <a href="{% url "dashboard" %}" class="nav-link">Dashboard</a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="#" class="nav-link">Contact</a>
+                <a href="#" class="nav-link">Kontakt</a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="{% url "logout" %}" class="nav-link">Wyloguj</a>
             </li>
         </ul>
 
@@ -57,7 +60,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <img src="{% static "dist/img/AdminLTELogo.png" %}" alt="AdminLTE Logo"
                  class="brand-image img-circle elevation-3"
                  style="opacity: .8">
-            <span class="brand-text font-weight-light">Świnka</span>
+            <span class="brand-text font-weight-light">Twoja<b>Świnka</b></span>
         </a>
 
         <!-- Sidebar -->
@@ -72,7 +75,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <a href="#" class="d-block">
                         {% if user.is_authenticated %}
                             <a href="{% url "user-details" %}">{{ user }}</a>
-                            <a href="{% url "logout" %}">Wyloguj</a>
                         {% else %}
                             <a href="{% url "login" %}">Zaloguj / </a>
                             <a href="{% url "register-form" %}">Zarejestruj się</a>
@@ -136,12 +138,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">PiggyBank</h1>
+                        <h1 class="m-0 text-dark">Twoja<b>Świnka</b></h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{% url "dashboard" %}">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Starter Page</li>
+                            <li>
+                                <a href="{% url "add-transaction" %}">
+                                    <button type="button" class="btn btn-block btn-warning btn-lg">Nowa transakcja
+                                    </button>
+                                </a>
+                            </li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
