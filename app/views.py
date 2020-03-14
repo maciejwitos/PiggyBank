@@ -20,6 +20,7 @@ class Dashboard(LoginRequiredMixin, View):
                                                   'accounts': accounts,
                                                   'my_wealth': float(my_wealth)})
 
+
 class View404(View):
 
     def get(self, request):

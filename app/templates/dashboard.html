@@ -1,82 +1,177 @@
 {% extends 'base.html' %}
 {% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Twoje Kategorie</h3>
+                    </div>
 
-    <div>
-        <table border='1'>
-            <thead>Kategorie</thead>
-            <tr>
-                <th>Kategoria</th>
-                <th>Wydane</th>
-            </tr>
-            {% for category in categories %}
-                <tr>
-                    <td>{{ category.name }}</td>
-                    <td>{{ category.spending }}&nbsp;zł</td>
-                </tr>
-            {% endfor %}
-        </table>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th style="width: 10px">#</th>
+                                <th>Nazwa</th>
+                                <th>Wydatki</th>
+                                <th style="width: 40px"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for category in categories %}
+                                <tr>
+                                    <td></td>
+                                    <td>{{ category.name }}</td>
+                                    <td>{{ category.spending }}zł</td>
+                                    <td></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer clearfix">
+                        <ul class="pagination pagination-sm m-0 float-right">
+                            <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Twoje Konta</h3>
+
+                        <div class="card-tools">
+                            <ul class="pagination pagination-sm float-right">
+                                <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card-body p-6">
+                        <table class="table table-sm">
+                            <thead>
+                            <tr>
+                                <th style="width: 10px">#</th>
+                                <th>Nazwa</th>
+                                <th>Bank</th>
+                                <th>Saldo</th>
+                                <th>Waluta</th>
+                            </tr>
+                            </thead>
+                            {% for account in accounts %}
+                                <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td>{{ account.name }}</td>
+                                    <td>{{ account.bank }}</td>
+                                    <td>{{ account.balance }}</td>
+                                    <td>{{ account.currency }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Waluty</h3>
+                    </div>
+
+                    <div class="card-body p-6">
+                        <table class="table table-sm">
+                            <thead>
+                            <tr>
+                                <th style="width: 10px">#</th>
+                                <th>Nazwa</th>
+                                <th>PLN/ *</th>
+                                <th>* / PLN</th>
+                            </tr>
+                            </thead>
+                            {% for currency in currencies %}
+                                <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td>{{ currency.name }}</td>
+                                    <td>{{ currency.in_pln }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
     </div>
-    <div>
-        <table border="1">
-            <thead>Waluty</thead>
-            <tr>
-                <th>Waluta</th>
-                <th>*/PLN</th>
-            </tr>
-            {% for currency in currencies %}
-                <tr>
-                    <td>{{ currency.name }}</td>
-                    <td>{{ currency.in_pln }}&nbsp;zł</td>
-                </tr>
-            {% endfor %}
-        </table>
-    </div>
-    <div>
-        <table border="1">
-            <thead>Transakcje</thead>
-            <tr>
-                <th>Data</th>
-                <th>Kwota</th>
-                <th>Cel</th>
-                <th>Kategoria</th>
-                <th>Bank</th>
-            </tr>
-            {% for transaction in transactions %}
-                <tr>
-                    <td>{{ transaction.date }}</td>
-                    <td>{{ transaction.amount }}</td>
-                    <td>{{ transaction.comment }}</td>
-                    <td>{{ transaction.category.name }}</td>
-                    <td>{{ transaction.account.name }}</td>
-                </tr>
-            {% endfor %}
-            <td>Suma:</td>
-            <td>{{ total }}</td>
-        </table>
-    </div>
-    <div>
-        <table border="1">
-            <thead>Konta</thead>
-            <tr>
-                <th>Konto</th>
-                <th>Saldo</th>
-                <th>Waluta</th>
-                <th>Bank</th>
-            </tr>
-            {% for account in accounts %}
-                <tr>
-                    <td>{{ account.name }}</td>
-                    <td>{{ account.balance }}</td>
-                    <td>{{ account.currency.name }}</td>
-                    <td>{{ account.bank }}</td>
-                </tr>
-            {% endfor %}
-            <tr>
-                <th>Majątek w PLN</th>
-            </tr>
-            <tr>
-                <td>{{ my_wealth }}</td>
-            </tr>
-        </table>
+
+    <div class="col-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Wszystkie transakcje</h3>
+
+                            <div class="card-tools">
+                                <div class="input-group input-group-sm" style="width: 150px;">
+                                    <input type="text" name="table_search" class="form-control float-right"
+                                           placeholder="Search">
+
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-default"><i
+                                                class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body table-responsive p-0" style="height: 300px;">
+                            <table class="table table-head-fixed text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Data</th>
+                                    <th>Kwota</th>
+                                    <th>Opis</th>
+                                    <th>Kategoria</th>
+                                    <th>Konto</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for transaction in transactions %}
+                                    <tr>
+                                        <td></td>
+                                        <td>{{ transaction.date }}</td>
+                                        <td>{{ transaction.amount }}</td>
+                                        <td>{{ transaction.comment }}</td>
+                                        <td>{{ transaction.category }}</td>
+                                        <td>{{ transaction.account }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
