@@ -27,18 +27,21 @@
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
-      <p class="login-box-msg">Sign in to start your session</p>
+      <p class="login-box-msg">Zaloguj się i śledź swoje finanse</p>
 
       <form action="{% url "login" %}" method="post">
           {% csrf_token %}
+          {{ form.username.label }}
         <div class="input-group mb-3">
           {{ form.username }}
           <div class="input-group-append">
             <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
+              <span class="fas fa-user"></span>
             </div>
           </div>
+            {{ form.username.errors }}
         </div>
+          {{ form.password.label }}
         <div class="input-group mb-3">
           {{ form.password }}
           <div class="input-group-append">
@@ -46,41 +49,31 @@
               <span class="fas fa-lock"></span>
             </div>
           </div>
+            {{ form.password.errors }}
         </div>
         <div class="row">
           <div class="col-8">
             <div class="icheck-primary">
               <input type="checkbox" id="remember">
               <label for="remember">
-                Remember Me
+                Zapamiętaj mnie
               </label>
             </div>
           </div>
           <!-- /.col -->
           <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+            <button type="submit" class="btn btn-primary btn-block">Zaloguj</button>
               <input type="hidden" name="next" value="/dashboard/">
           </div>
           <!-- /.col -->
         </div>
       </form>
 
-      <div class="social-auth-links text-center mb-3">
-        <p>- OR -</p>
-        <a href="#" class="btn btn-block btn-primary">
-          <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
-        </a>
-        <a href="#" class="btn btn-block btn-danger">
-          <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
-        </a>
-      </div>
-      <!-- /.social-auth-links -->
-
       <p class="mb-1">
-        <a href="forgot-password.html">I forgot my password</a>
+        <a href="forgot-password.html">Zapomniałeś hasła?</a>
       </p>
       <p class="mb-0">
-        <a href="{% url "register-form" %}" class="text-center">Register a new membership</a>
+        <a href="{% url "register-form" %}" class="text-center">Utwórz konto!</a>
       </p>
     </div>
     <!-- /.login-card-body -->

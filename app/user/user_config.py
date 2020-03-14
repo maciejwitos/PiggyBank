@@ -25,7 +25,6 @@ class SignUp(View):
             login(request, user)
             return redirect('/dashboard/')
 
-        form = SigneUpForm()
         return render(request, 'user/register.html', {'form': form})
 
 
