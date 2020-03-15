@@ -5,39 +5,27 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-
                         <h3 class="card-title">Twoje Kategorie</h3>
-                        <div>
-                            <ul class="pagination pagination-sm m-0 float-right">
-                                {% if page_objects.has_previous %}
-                                    <li class="page-item"><a class="page-link" href="?page=1">&laquo;</a>
-                                {% elif page_objects.has_previous == False %}
-                                {% endif %}
-                                {% for page in page_objects.paginator.page_range %}
-                                    <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
-                                {% endfor %}
-                                {% if page_objects.has_next %}
-                                    <li class="page-item"><a class="page-link"
-                                                             href="?page={{ page_objects.next_page_number }}">&raquo;</a>
-                                {% elif recipes.has_next == False %}
-                                {% endif %}
-
-                            </ul>
-                        </div>
                     </div>
 
 
-              <div class="card-body table-responsive p-0" style="height: 500px;">
+                    <div class="card-body table-responsive p-0" style="height: 520px;">
                         <table class="table table-bordered">
                             <thead>
                             <tr>
                                 <th style="width: 10px">#</th>
                                 <th>Nazwa</th>
                                 <th>Wydatki</th>
-                                <th style="width: 40px"></th>
+                                <th>Budżet</th>
                             </tr>
                             </thead>
                             <tbody>
+                            {% if categories.count == 0 %}
+                            <td colspan="4"><a href="{% url "add-category" %}"><button class="btn btn-block btn-success btn-s">Dodaj pierwszą kategorię</button></a></td>
+                                <tr>
+                                <td colspan="4" class="text-center">Tu będą twoje kategorie</td>
+                                </tr>
+                            {% endif %}
                             {% for category in categories %}
                                 <tr>
                                     <td></td>
@@ -59,7 +47,7 @@
                     <div class="card-header">
                         <h3 class="card-title">Twoje Konta</h3>
                     </div>
-                <div class="card-body table-responsive p-0" style="height: 300px;">
+                    <div class="card-body table-responsive p-0" style="height: 250px;">
                         <table class="table table-sm">
                             <thead>
                             <tr>
@@ -70,6 +58,12 @@
                                 <th>Waluta</th>
                             </tr>
                             </thead>
+                        {% if accounts.count == 0 %}
+                            <td colspan="5"><a href="{% url "add-account" %}"><button class="btn btn-block btn-success btn-s">Dodaj pierwsze konto</button></a></td>
+                                <tr>
+                                <td colspan="5" class="text-center">Tu będą twoje konta</td>
+                                </tr>
+                            {% endif %}
                             {% for account in accounts %}
                                 <tbody>
                                 <tr>
@@ -159,6 +153,11 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                {% if transactions.count == 0 %}
+                                <tr>
+                                <td colspan="7" class="text-center">Tu znajdziesz swoje transakcje</td>
+                                </tr>
+                                {% endif %}
                                 {% for transaction in transactions %}
                                     <tr>
                                         <td></td>

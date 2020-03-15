@@ -8,9 +8,6 @@ class Dashboard(LoginRequiredMixin, View):
 
     def get(self, request):
         categories = Category.objects.filter(user=request.user).order_by('-spending')
-        categories_paginator = Paginator(categories, 6)
-        page_number = request.GET.get('page')
-        page_objects = categories_paginator.get_page(page_number)
         currencies = Currency.objects.all()
         transactions = Transaction.objects.filter(user=request.user).order_by('-date')
         accounts = Account.objects.filter(user=request.user).order_by('-balance')
@@ -29,6 +26,7 @@ class Dashboard(LoginRequiredMixin, View):
         data = request.POST.get('search_transaction')
         categories = Category.objects.filter(user=request.user).order_by('-spending')
         currencies = Currency.objects.all()
+        # search for transaction
         transactions = Transaction.objects.filter(user=request.user).filter(
             Q(comment__icontains=data) | Q(date__icontains=data)).order_by('-date')
 
