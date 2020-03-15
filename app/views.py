@@ -1,5 +1,6 @@
 from app.user.user_config import *
 from django.db.models import Q
+from django.core.paginator import Paginator
 
 
 class Dashboard(LoginRequiredMixin, View):
@@ -7,6 +8,9 @@ class Dashboard(LoginRequiredMixin, View):
 
     def get(self, request):
         categories = Category.objects.filter(user=request.user).order_by('-spending')
+        categories_paginator = Paginator(categories, 6)
+        page_number = request.GET.get('page')
+        page_objects = categories_paginator.get_page(page_number)
         currencies = Currency.objects.all()
         transactions = Transaction.objects.filter(user=request.user).order_by('-date')
         accounts = Account.objects.filter(user=request.user).order_by('-balance')
@@ -15,7 +19,7 @@ class Dashboard(LoginRequiredMixin, View):
             balance = account.balance
             balance_in_pln = balance * account.currency.in_pln
             my_wealth += balance_in_pln
-        return render(request, 'dashboard.html', {'categories': categories,
+        return render(request, 'dashboard.html', {'page_objects': page_objects ,
                                                   'currencies': currencies,
                                                   'transactions': transactions,
                                                   'accounts': accounts,
