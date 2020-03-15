@@ -19,7 +19,7 @@ class Dashboard(LoginRequiredMixin, View):
             balance = account.balance
             balance_in_pln = balance * account.currency.in_pln
             my_wealth += balance_in_pln
-        return render(request, 'dashboard.html', {'page_objects': page_objects ,
+        return render(request, 'dashboard.html', {'categories': categories ,
                                                   'currencies': currencies,
                                                   'transactions': transactions,
                                                   'accounts': accounts,

@@ -8,26 +8,26 @@
 
                         <h3 class="card-title">Twoje Kategorie</h3>
                         <div>
-                        <ul class="pagination pagination-sm m-0 float-right">
-                            {% if page_objects.has_previous %}
-                                <li class="page-item"><a class="page-link" href="?page=1">&laquo;</a>
-                                    {% elif page_objects.has_previous == False %}
-                            {% endif %}
-                            {% for page in page_objects.paginator.page_range %}
-                                <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
-                            {% endfor %}
-                            {% if page_objects.has_next %}
-                                <li class="page-item"><a class="page-link"
-                                                         href="?page={{ page_objects.next_page_number }}">&raquo;</a>
-                                    {% elif recipes.has_next == False %}
-                                    {% endif %}
+                            <ul class="pagination pagination-sm m-0 float-right">
+                                {% if page_objects.has_previous %}
+                                    <li class="page-item"><a class="page-link" href="?page=1">&laquo;</a>
+                                {% elif page_objects.has_previous == False %}
+                                {% endif %}
+                                {% for page in page_objects.paginator.page_range %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+                                {% endfor %}
+                                {% if page_objects.has_next %}
+                                    <li class="page-item"><a class="page-link"
+                                                             href="?page={{ page_objects.next_page_number }}">&raquo;</a>
+                                {% elif recipes.has_next == False %}
+                                {% endif %}
 
-                        </ul>
+                            </ul>
+                        </div>
                     </div>
-                    </div>
 
 
-                    <div class="card-body">
+              <div class="card-body table-responsive p-0" style="height: 500px;">
                         <table class="table table-bordered">
                             <thead>
                             <tr>
@@ -38,7 +38,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {% for category in page_objects %}
+                            {% for category in categories %}
                                 <tr>
                                     <td></td>
                                     <td>{{ category.name }}</td>
@@ -58,19 +58,8 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Twoje Konta</h3>
-
-                        <div class="card-tools">
-                            <ul class="pagination pagination-sm float-right">
-                                <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-                            </ul>
-                        </div>
                     </div>
-
-                    <div class="card-body p-6">
+                <div class="card-body table-responsive p-0" style="height: 300px;">
                         <table class="table table-sm">
                             <thead>
                             <tr>
@@ -138,7 +127,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Wszystkie transakcje</h3>
+                            <h3 class="card-title">Twoje transakcje</h3>
 
                             <div class="card-tools">
                                 <form action="" method="post">
