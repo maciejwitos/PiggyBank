@@ -17,8 +17,12 @@ django 2.2.7
 I've used BootStrap Admin LTE.
 
 ## How it is look like
-
+#dashboard
 ![dashboard](pics/dashboard.png)
+#transactions
+![transactions](pics/transactions.png)
+#accounts
+![accounts](pics/accounts.png)
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
