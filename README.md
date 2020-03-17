@@ -3,6 +3,9 @@
 # PiggyBank
 
 Is an app to manage you home budget with maximum customisation. Just create account and start using it. 
+- add transactions
+- categories
+- accounts in various currencies
 
 ## Technology
 
@@ -10,6 +13,16 @@ Is an app to manage you home budget with maximum customisation. Just create acco
 ```bash
 python3
 django 2.2.7
+```
+## Requirements
+
+
+```bash
+python3
+django 2.2.7
+pytest
+Faker
+psycopg2-binary	2.8.4
 ```
 
 ## As front end
