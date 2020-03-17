@@ -1,6 +1,5 @@
 from app.user.user_config import *
 from django.db.models import Q
-from django.core.paginator import Paginator
 
 
 class Dashboard(LoginRequiredMixin, View):
@@ -16,7 +15,7 @@ class Dashboard(LoginRequiredMixin, View):
             balance = account.balance
             balance_in_pln = balance * account.currency.in_pln
             my_wealth += balance_in_pln
-        return render(request, 'dashboard.html', {'categories': categories ,
+        return render(request, 'dashboard.html', {'categories': categories,
                                                   'currencies': currencies,
                                                   'transactions': transactions,
                                                   'accounts': accounts,
