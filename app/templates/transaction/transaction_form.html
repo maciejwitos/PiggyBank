@@ -1,14 +1,52 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <form action="" method="post">
+    <form method="post" action="">
         {% csrf_token %}
-        <table>
-            <tr>
-                <td>{{ form.as_table }}</td>
-                <td><input type="submit" value="Zapisz"></td>
-            </tr>
-        </table>
-
+        <div class="card card-green">
+            <div class="card-header">
+                <h3 class="card-title">Dodaj transakcję</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <input type="text" name="comment" class="form-control" placeholder="Komentarz">
+                    </div>
+                    <div class="col-6">
+                        <input type="number" name="amount" class="form-control" placeholder="Kwota">
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-4">
+                        <input type="date" class="form-control" name="date">
+                    </div>
+                    <div class="col-4">
+                        <select class="form-control select2" name="category" style="width: 100%;">
+                            {% for cat in form.category %}
+                                {{ cat }}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <select class="form-control select2" name="account" style="width: 100%;">
+                            {% for acc in form.account %}
+                                {{ acc }}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <button type="submit" class="btn btn-block btn-warning btn-med">Dodaj
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </form>
+
+
 {% endblock %}
+

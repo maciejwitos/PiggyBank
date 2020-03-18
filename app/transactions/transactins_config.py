@@ -16,13 +16,14 @@ class AddTransaction(LoginRequiredMixin, View):
 
     def post(self, request):
         form = AddTransactionForm(request.user, request.POST, initial={'user': request.user})
+        print(form.data)
         if form.is_valid():
             Transaction.objects.create(
-                date=form.cleaned_data['date'],
-                amount=form.cleaned_data['amount'],
-                comment=form.cleaned_data['comment'],
-                category=form.cleaned_data['category'],
-                account=form.cleaned_data['account'],
+                date=request.POST.get('date'),
+                amount=request.POST.get('amount'),
+                comment=request.POST.get('comment'),
+                category=request.POST.get('category'),
+                account=request.POST.get('account'),
                 user=request.user
             )
 
