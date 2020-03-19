@@ -37,14 +37,11 @@ class ReadAccounts(LoginRequiredMixin, View):
 
 # Edycja konta
 class EditAccount(LoginRequiredMixin, UpdateView):
+
     login_url = '/login/'
-
     model = Account
-    fields = ('name', 'bank', 'currency', 'balance')
+    fields = ('name', 'bank', 'currency', 'balance', 'user',)
     success_url = '/account/all/'
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
 
     def get(self, request, *args, **kwargs):
         if Account.objects.get(id=kwargs['pk']).user.pk == request.user.pk:
