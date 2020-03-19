@@ -19,11 +19,11 @@ class AddTransaction(LoginRequiredMixin, View):
         print(form.data)
         if form.is_valid():
             Transaction.objects.create(
-                date=request.POST.get('date'),
-                amount=request.POST.get('amount'),
-                comment=request.POST.get('comment'),
-                category=request.POST.get('category'),
-                account=request.POST.get('account'),
+                date=form.cleaned_data['date'],
+                amount=form.cleaned_data['amount'],
+                comment=form.cleaned_data['comment'],
+                category=form.cleaned_data['category'],
+                account=form.cleaned_data['account'],
                 user=request.user
             )
 
@@ -33,7 +33,6 @@ class AddTransaction(LoginRequiredMixin, View):
             bank = form.cleaned_data['account']
             bank.balance -= form.cleaned_data['amount']
             bank.save()
-
 
             return redirect('/transaction/all/')
 
