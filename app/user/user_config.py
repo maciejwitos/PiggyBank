@@ -5,8 +5,9 @@ from django.views import View
 from django.views.generic import CreateView, DeleteView, FormView
 from app.forms import SigneUpForm
 from app.models import *
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic.edit import DeletionMixin
+from django.http import HttpResponse
 
 
 class SignUp(View):

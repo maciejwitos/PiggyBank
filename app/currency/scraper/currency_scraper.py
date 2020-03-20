@@ -4,9 +4,10 @@ from beautifulscraper import BeautifulSoup
 from selenium import webdriver
 from app.models import Currency
 
-
 class GetCurrencies:
-
+    """
+    Modul resposible for scraping data about currencies from website
+    """
     global current_day
 
     @staticmethod

@@ -4,6 +4,13 @@ from app.currency.scraper.currency_scraper import *
 
 
 class Dashboard(LoginRequiredMixin, View):
+    """
+    Main View Dashboard. When run it's:
+    - updating currencies
+    - showing all sections for user: categories, currencies, transactions and accounts
+    - has search for transactions
+    - showing total wealth of user
+    """
     login_url = '/login/'
 
     def get(self, request):
@@ -45,6 +52,10 @@ class Dashboard(LoginRequiredMixin, View):
 
 
 class View404(View):
+
+    """
+    View for redirection after error
+    """
 
     def get(self, request):
         return render(request, '404.html')

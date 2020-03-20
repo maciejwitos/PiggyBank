@@ -1,11 +1,13 @@
 from django.views.generic import UpdateView
-
 from app.user.user_config import *
 from app.currency.currency_form import *
 
 
-class AddCurrency(LoginRequiredMixin, View):
-    login_url = '/login/'
+class AddCurrency(PermissionRequiredMixin, View):
+    permission_required = 'app/add_logentry'
+
+    def handle_no_permission(self):
+        return redirect('404')
 
     def get(self, request):
         form = AddCurrencyForm()
@@ -22,24 +24,30 @@ class AddCurrency(LoginRequiredMixin, View):
         return redirect('all-currency')
 
 
-class ReadCurrency(LoginRequiredMixin, View):
-    login_url = '/login/'
+class ReadCurrency(PermissionRequiredMixin, View):
+    permission_required = 'app/add_logentry'
 
     def get(self, request):
         currencies = Currency.objects.all()
         return render(request, 'currency/currency_all.html', {"currencies": currencies})
 
 
-class EditCurrency(LoginRequiredMixin, UpdateView):
-    login_url = '/login/'
+class EditCurrency(PermissionRequiredMixin, UpdateView):
+    permission_required = 'app/add_logentry'
+
+    def handle_no_permission(self):
+        return redirect('404')
 
     model = Currency
     fields = ('name', 'in_pln')
     success_url = '/currency/all/'
 
 
-class DeleteCurrency(LoginRequiredMixin, DeleteView):
-    login_url = '/login/'
+class DeleteCurrency(PermissionRequiredMixin, DeleteView):
+    permission_required = 'app/add_logentry'
+
+    def handle_no_permission(self):
+        return redirect('404')
 
     model = Currency
     success_url = reverse_lazy('/currency/all/')
