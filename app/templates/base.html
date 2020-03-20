@@ -113,7 +113,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <li class="nav-item">
                                 <a href="{% url "all-category" %}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Kategorie</p>
+                                    <p>Twoje Kategorie</p>
                                 </a>
                             </li>
                         </ul>
@@ -204,12 +204,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <p>Dodaj kategorie</p>
                             </a>
                         </li>
+                        {% if perms.app.add_logentry %}
                         <li class="nav-item">
                             <a href="{% url "add-currency" %}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Dodaj walutę</p>
                             </a>
                         </li>
+                        {% endif %}
                     </ul>
                 </li>
             </ul>
