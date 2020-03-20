@@ -14,13 +14,24 @@ class GetCurrencies:
 
         if not current_day == date.today():
 
-            driver = webdriver.Chrome("/home/maciej/Downloads/chromedriver_linux64/chromedriver")
+            # set a new option avoiding open new browser window
+            options = webdriver.ChromeOptions()
+            options.arguments.append('headless')
 
+            # set browser
+            driver = webdriver.Chrome("/home/maciej/projects/Final_Project/app/currency/scraper/chromedriver", options=options)
+
+            # go to website
             driver.get('https://www.mybank.pl/')
+
+            # collecting content from website
             content = driver.page_source
             soup = BeautifulSoup(content, features='html.parser')
+
+            # closing browser
             driver.quit()
 
+            # setting new value of currencies according downloaded data
             eur = Currency.objects.get(name='EUR')
             eur.in_pln = float(
                 (re.search(r'\d[,]\d*', str(soup.find('td', attrs={'id': 'EURPLN_NBP'}))).group()).replace(',', '.'))
@@ -46,12 +57,12 @@ class GetCurrencies:
                 (re.search(r'\d[,]\d*', str(soup.find('td', attrs={'id': 'CHFPLN_NBP'}))).group()).replace(',', '.'))
             chf.save()
 
+            #setting variable current_day for today
             current_day = date.today()
 
             return current_day
 
         else:
-            print("Up to date")
             pass
 
 
