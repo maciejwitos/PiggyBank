@@ -2,18 +2,22 @@ from datetime import date
 import re
 from beautifulscraper import BeautifulSoup
 from selenium import webdriver
-from app.models import Currency
+from app.models import Currency, LastUpdateDate
+
 
 class GetCurrencies:
+
     """
-    Modul resposible for scraping data about currencies from website
+    Module responsible for scraping data about currencies from website
     """
-    global current_day
 
     @staticmethod
     def scrap_currencies(current_day):
 
-        if not current_day == date.today():
+        last_day = LastUpdateDate.objects.get(id=1)
+
+        print('Start pętli')
+        if not current_day == last_day.last_update:
 
             # set a new option avoiding open new browser window
             options = webdriver.ChromeOptions()
@@ -59,11 +63,14 @@ class GetCurrencies:
             chf.save()
 
             #setting variable current_day for today
-            current_day = date.today()
 
-            return current_day
+            last_day.last_update = date.today()
+            last_day.save()
+            print('Przeszło przez pętle')
+            return last_day
 
         else:
+            print('Ominęło pętle')
             pass
 
 

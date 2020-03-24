@@ -41,3 +41,10 @@ class Transaction(models.Model):
 
     def __str__(self):
         return self.comment
+
+
+class LastUpdateDate(models.Model):
+    last_update = models.DateField()
+
+    def __str__(self):
+        return self.last_update
