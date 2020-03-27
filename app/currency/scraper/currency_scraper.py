@@ -16,7 +16,6 @@ class GetCurrencies:
 
         last_day = LastUpdateDate.objects.get(id=1)
 
-        print('Start pętli')
         if not current_day == last_day.last_update:
 
             # set a new option avoiding open new browser window
@@ -66,11 +65,9 @@ class GetCurrencies:
 
             last_day.last_update = date.today()
             last_day.save()
-            print('Przeszło przez pętle')
             return last_day
 
         else:
-            print('Ominęło pętle')
             pass
 
 
