@@ -17,8 +17,15 @@ class Dashboard(LoginRequiredMixin, View):
         GetCurrencies.scrap_currencies(current_day=date.today())
         categories = Category.objects.filter(user=request.user).order_by('-spending')
         currencies = Currency.objects.all()
-        transactions = Transaction.objects.filter(user=request.user).order_by('-date')
+        transactions = Transaction.objects.filter(
+            user=request.user).filter(
+            date__month=date.today().month).filter(
+            date__year=date.today().year).order_by('-date')
         accounts = Account.objects.filter(user=request.user).order_by('-balance')
+        budgets = Budget.objects.filter(
+            user=request.user).filter(
+            start_date__month=date.today().month).filter(
+            start_date__year=date.today().year)
         my_wealth = 0
         for account in accounts:
             balance = account.balance
@@ -28,6 +35,7 @@ class Dashboard(LoginRequiredMixin, View):
                                                   'currencies': currencies,
                                                   'transactions': transactions,
                                                   'accounts': accounts,
+                                                  'budgets': budgets,
                                                   'my_wealth': float(my_wealth)})
 
     def post(self, request):
@@ -39,6 +47,11 @@ class Dashboard(LoginRequiredMixin, View):
             Q(comment__icontains=data) | Q(date__icontains=data)).order_by('-date')
 
         accounts = Account.objects.filter(user=request.user).order_by('-balance')
+        budgets = Budget.objects.filter(
+            user=request.user).filter(
+            start_date__month=date.today().month).filter(
+            start_date__year=date.today().year)
+
         my_wealth = 0
         for account in accounts:
             balance = account.balance
@@ -46,16 +59,15 @@ class Dashboard(LoginRequiredMixin, View):
             my_wealth += balance_in_pln
         return render(request, 'dashboard.html', {'categories': categories,
                                                   'currencies': currencies,
+                                                  'budgets': budgets,
                                                   'transactions': transactions,
                                                   'accounts': accounts,
                                                   'my_wealth': float(my_wealth)})
 
 
 class View404(View):
-
     """
     View for redirection after error
     """
-
     def get(self, request):
         return render(request, '404.html')

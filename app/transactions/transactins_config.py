@@ -1,3 +1,4 @@
+from datetime import date
 from decimal import Decimal
 
 from django.views.generic import UpdateView
@@ -16,7 +17,6 @@ class AddTransaction(LoginRequiredMixin, View):
 
     def post(self, request):
         form = AddTransactionForm(request.user, request.POST, initial={'user': request.user})
-        print(form.data)
         if form.is_valid():
             Transaction.objects.create(
                 date=form.cleaned_data['date'],
@@ -27,12 +27,24 @@ class AddTransaction(LoginRequiredMixin, View):
                 user=request.user
             )
 
-            category = form.cleaned_data['category']
-            category.spending += form.cleaned_data['amount']
-            category.save()
+            amount = form.cleaned_data['amount']
+
             bank = form.cleaned_data['account']
-            bank.balance -= form.cleaned_data['amount']
+            bank.balance -= amount
             bank.save()
+
+            category = form.cleaned_data['category']
+            category.spending += amount
+            category.save()
+
+            budgets = Budget.objects.filter(
+                user=request.user).filter(
+                category=category).filter(
+                start_date__month=date.today().month).filter(
+                start_date__year=date.today().year)
+            budget = Budget.objects.get(id=budgets[0].id)
+            budget.expenses += amount
+            budget.save()
 
             return redirect('/transaction/all/')
 
@@ -67,17 +79,26 @@ class EditTransaction(LoginRequiredMixin, UpdateView):
     def post(self, request, *args, **kwargs):
         # get data about editing objects and related models
         transaction = Transaction.objects.get(id=kwargs['pk'])
-        # substract old amount from category spending and account balance
+        budgets = Budget.objects.filter(
+            user=request.user).filter(
+            category=transaction.category).filter(
+            start_date__month=date.today().month).filter(
+            start_date__year=date.today().year)
+        budget = Budget.objects.get(id=budgets[0].id)
+        # subtract old amount from category spending, account balance and budget expenses
         transaction.account.balance += transaction.amount
         transaction.category.spending -= transaction.amount
+        budget.expenses -= transaction.amount
         # take new amount from form
         new_amount = float(self.request.POST.get('amount'))
         # add new amount to cateogry spending and account balance
         transaction.category.spending += Decimal(new_amount)
         transaction.account.balance -= Decimal(new_amount)
+        budget.expenses += Decimal(new_amount)
         # save models
         transaction.account.save()
         transaction.category.save()
+        budget.save()
         return super().post(request, *args, **kwargs)
 
 
@@ -98,6 +119,12 @@ class DeleteTransaction(LoginRequiredMixin, DeleteView):
         transaction = Transaction.objects.get(id=kwargs['pk'])
         bank = transaction.account
         category = transaction.category
+        budgets = Budget.objects.filter(
+            user=request.user).filter(
+            category=transaction.category).filter(
+            start_date__month=date.today().month).filter(
+            start_date__year=date.today().year)
+        budget = Budget.objects.get(id=budgets[0].id)
         # delete object
         result = super().delete(request, *args, **kwargs)
         # refund for category and account balance
@@ -107,6 +134,9 @@ class DeleteTransaction(LoginRequiredMixin, DeleteView):
         if bank is not None:
             bank.balance += transaction.amount
             bank.save()
+        if budget is not None:
+            budget.expenses -= transaction.amount
+            budget.save()
 
         return result
 

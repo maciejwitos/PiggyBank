@@ -19,6 +19,7 @@ from django.urls import path, include
 from app.accounts.accounts_config import *
 from app.category.category_config import *
 from app.currency.currency_config import *
+from app.budgets.budgets_config import *
 from app.transactions.transactins_config import *
 from app.views import *
 from django.contrib.auth import views as auth_views
@@ -74,5 +75,7 @@ urlpatterns = [
     path('currency/edit/<pk>/', EditCurrency.as_view(template_name='currency/currency_edit.html'), name='edit-currency'),
     path('currency/delete/<pk>/', DeleteCurrency.as_view(template_name='confirm_delete.html', success_url='/currency/all'),
          name='delete-currency'),
+
+    path('budget/add/', AddBudget.as_view(), name='add-budget')
 
 ]

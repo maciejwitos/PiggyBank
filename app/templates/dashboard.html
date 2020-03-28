@@ -5,7 +5,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Twoje Kategorie</h3>
+                        <h3 class="card-title">Twoje kategorie w tym miesiącu: </h3>
                     </div>
 
 
@@ -21,17 +21,26 @@
                             </thead>
                             <tbody>
                             {% if categories.count == 0 %}
-                            <td colspan="4"><a href="{% url "add-category" %}"><button class="btn btn-block btn-success btn-s">Dodaj pierwszą kategorię</button></a></td>
+                                <td colspan="4"><a href="{% url "add-category" %}">
+                                    <button class="btn btn-block btn-success btn-s">Dodaj pierwszą kategorię</button>
+                                </a></td>
                                 <tr>
-                                <td colspan="4" class="text-center">Tu będą twoje kategorie</td>
+                                    <td colspan="4" class="text-center">Tu będą twoje kategorie</td>
                                 </tr>
                             {% endif %}
-                            {% for category in categories %}
+                            {% for budget in budgets %}
                                 <tr>
                                     <td></td>
-                                    <td>{{ category.name }}</td>
-                                    <td>{{ category.spending }}zł</td>
-                                    <td></td>
+                                    <td>{{ budget.category.name }}</td>
+                                    {% if budget.category == category %}
+                                        <td>{{ budget.expenses }}</td>
+                                        {% if budget.budget < budget.expenses %}
+                                            <td style="color: red">{{ budget.budget }}</td>
+                                        {% else %}
+                                            <td style="color: darkgreen">{{ budget.budget }}</td>
+                                        {% endif %}
+                                    {% endif %}
+
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -58,10 +67,12 @@
                                 <th>Waluta</th>
                             </tr>
                             </thead>
-                        {% if accounts.count == 0 %}
-                            <td colspan="5"><a href="{% url "add-account" %}"><button class="btn btn-block btn-success btn-s">Dodaj pierwsze konto</button></a></td>
+                            {% if accounts.count == 0 %}
+                                <td colspan="5"><a href="{% url "add-account" %}">
+                                    <button class="btn btn-block btn-success btn-s">Dodaj pierwsze konto</button>
+                                </a></td>
                                 <tr>
-                                <td colspan="5" class="text-center">Tu będą twoje konta</td>
+                                    <td colspan="5" class="text-center">Tu będą twoje konta</td>
                                 </tr>
                             {% endif %}
                             {% for account in accounts %}
@@ -120,7 +131,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Twoje transakcje</h3>
+                            <h3 class="card-title">Twoje transakcje w tym miesiącu:</h3>
 
                             <div class="card-tools">
                                 <form action="" method="post">
@@ -153,9 +164,9 @@
                                 </thead>
                                 <tbody>
                                 {% if transactions.count == 0 %}
-                                <tr>
-                                <td colspan="7" class="text-center">Tu znajdziesz swoje transakcje</td>
-                                </tr>
+                                    <tr>
+                                        <td colspan="7" class="text-center">Tu znajdziesz swoje transakcje</td>
+                                    </tr>
                                 {% endif %}
                                 {% for transaction in transactions %}
                                     <tr>

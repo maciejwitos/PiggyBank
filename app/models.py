@@ -20,6 +20,18 @@ class Category(models.Model):
         return self.name
 
 
+class Budget(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+    budget = models.DecimalField(default=0, decimal_places=2, max_digits=10)
+    expenses = models.DecimalField(default=0, decimal_places=2, max_digits=10)
+    start_date = models.DateField()
+    end_date = models.DateField()
+
+    def __str__(self):
+        return self.category.name + " " + str(self.start_date)
+
+
 class Account(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=24)
@@ -48,3 +60,4 @@ class LastUpdateDate(models.Model):
 
     def __str__(self):
         return self.last_update
+
