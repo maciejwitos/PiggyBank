@@ -15,8 +15,8 @@
                             <tr>
                                 <th style="width: 10px">#</th>
                                 <th>Nazwa</th>
-                                <th>Wydatki</th>
                                 <th>Budżet</th>
+                                <th>Wydatki</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -25,20 +25,26 @@
                                     <button class="btn btn-block btn-success btn-s">Dodaj pierwszą kategorię</button>
                                 </a></td>
                                 <tr>
-                                    <td colspan="4" class="text-center">Tu będą twoje kategorie</td>
+                                    <td colspan="4" class="text-center">Następnie zaplanuj wydatki dla każdej kategorii</td>
+                                </tr>
+                            {% endif %}
+                            {% if budgets.count == 0 %}
+                                <td colspan="4"><a href="{% url "add-budget" %}">
+                                    <button class="btn btn-block btn-success btn-s">Dodaj pierwszy budżet</button>
+                                </a></td>
+                                <tr>
+                                    <td colspan="4" class="text-center">Tu znajdziesz podsumowanie twojego budżetu</td>
                                 </tr>
                             {% endif %}
                             {% for budget in budgets %}
                                 <tr>
                                     <td></td>
                                     <td>{{ budget.category.name }}</td>
-                                    {% if budget.category == category %}
-                                        <td>{{ budget.expenses }}</td>
-                                        {% if budget.budget < budget.expenses %}
-                                            <td style="color: red">{{ budget.budget }}</td>
-                                        {% else %}
-                                            <td style="color: darkgreen">{{ budget.budget }}</td>
-                                        {% endif %}
+                                    <td>{{ budget.budget }}</td>
+                                    {% if budget.budget < budget.expenses %}
+                                        <td style="color: red">{{ budget.expenses }}</td>
+                                    {% else %}
+                                        <td style="color: darkgreen">{{ budget.expenses }}</td>
                                     {% endif %}
                                 </tr>
                             {% endfor %}

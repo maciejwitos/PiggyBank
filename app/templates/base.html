@@ -89,33 +89,73 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
-                    <li class="nav-item has-treeview menu-open">
+                    <li class="nav-item">
+                        <a href="{% url "all-transaction" %}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Transakcje</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url "all-account" %}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Twoje Banki</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url "all-category" %}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Twoje Kategorie</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url "all-budget" %}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Zaplanowane Budżety</p>
+                        </a>
+                    </li>
+                    <li class="nav-item has-treeview">
                         <a href="#" class="nav-link active">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
-                                Zakładki
+                                Akcje
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
+
                             <li class="nav-item">
-                                <a href="{% url "all-transaction" %}" class="nav-link">
+                                <a href="{% url "add-transaction" %}" class="nav-link   ">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Transakcje</p>
+                                    <p>Dodaj transakcje</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{% url "all-account" %}" class="nav-link">
+                                <a href="{% url "add-account" %}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Twoje Banki</p>
+                                    <p>Dodaj bank</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{% url "all-category" %}" class="nav-link">
+                                <a href="{% url "add-category" %}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Twoje Kategorie</p>
+                                    <p>Dodaj kategorie</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{% url "add-budget" %}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Dodaj budżet</p>
+                                </a>
+                            </li>
+                            {% if perms.app.add_logentry %}
+                                <li class="nav-item">
+                                    <a href="{% url "add-currency" %}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Dodaj walutę</p>
+                                    </a>
+                                </li>
+                            {% endif %}
+
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -186,32 +226,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{% url "add-transaction" %}" class="nav-link active">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Dodaj transakcje</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{% url "add-account" %}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Dodaj bank</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{% url "add-category" %}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Dodaj kategorie</p>
-                            </a>
-                        </li>
-                        {% if perms.app.add_logentry %}
-                        <li class="nav-item">
-                            <a href="{% url "add-currency" %}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Dodaj walutę</p>
-                            </a>
-                        </li>
-                        {% endif %}
+
                     </ul>
                 </li>
             </ul>
