@@ -1,3 +1,4 @@
+from datetime import date
 from app.budgets.budgets_form import *
 from app.user.user_config import *
 
@@ -6,7 +7,7 @@ class AddBudget(View):
 
     def get(self, request):
         form = AddBudgetForm(request.user, initial={'user': request.user})
-        return render(request, 'budget_form.html', {'form': form})
+        return render(request, 'budget/budget_form.html', {'form': form})
 
     def post(self, request):
         form = AddBudgetForm(request.user, request.POST, initial={'user': request.user})
@@ -18,3 +19,13 @@ class AddBudget(View):
             return redirect('dashboard')
         else:
             return redirect('404')
+
+
+class ViewBudgets(View):
+
+    def get(self, request):
+        budgets = Budget.objects.filter(
+                user=request.user).filter(
+                date__month=date.today().month).filter(
+                date__year=date.today().year)
+        return render(request, 'budget/budget_all.html', {'budgets': budgets})
