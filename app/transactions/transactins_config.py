@@ -40,8 +40,8 @@ class AddTransaction(LoginRequiredMixin, View):
             budgets = Budget.objects.filter(
                 user=request.user).filter(
                 category=category).filter(
-                start_date__month=date.today().month).filter(
-                start_date__year=date.today().year)
+                date__month=date.today().month).filter(
+                date__year=date.today().year)
             budget = Budget.objects.get(id=budgets[0].id)
             budget.expenses += amount
             budget.save()
@@ -82,8 +82,8 @@ class EditTransaction(LoginRequiredMixin, UpdateView):
         budgets = Budget.objects.filter(
             user=request.user).filter(
             category=transaction.category).filter(
-            start_date__month=date.today().month).filter(
-            start_date__year=date.today().year)
+            date__month=date.today().month).filter(
+            date__year=date.today().year)
         budget = Budget.objects.get(id=budgets[0].id)
         # subtract old amount from category spending, account balance and budget expenses
         transaction.account.balance += transaction.amount
@@ -122,8 +122,8 @@ class DeleteTransaction(LoginRequiredMixin, DeleteView):
         budgets = Budget.objects.filter(
             user=request.user).filter(
             category=transaction.category).filter(
-            start_date__month=date.today().month).filter(
-            start_date__year=date.today().year)
+            date__month=date.today().month).filter(
+            date__year=date.today().year)
         budget = Budget.objects.get(id=budgets[0].id)
         # delete object
         result = super().delete(request, *args, **kwargs)

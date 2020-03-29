@@ -24,8 +24,8 @@ class Dashboard(LoginRequiredMixin, View):
         accounts = Account.objects.filter(user=request.user).order_by('-balance')
         budgets = Budget.objects.filter(
             user=request.user).filter(
-            start_date__month=date.today().month).filter(
-            start_date__year=date.today().year)
+            date__month=date.today().month).filter(
+            date__year=date.today().year)
         my_wealth = 0
         for account in accounts:
             balance = account.balance
@@ -49,8 +49,8 @@ class Dashboard(LoginRequiredMixin, View):
         accounts = Account.objects.filter(user=request.user).order_by('-balance')
         budgets = Budget.objects.filter(
             user=request.user).filter(
-            start_date__month=date.today().month).filter(
-            start_date__year=date.today().year)
+            date__month=date.today().month).filter(
+            date__year=date.today().year)
 
         my_wealth = 0
         for account in accounts:
