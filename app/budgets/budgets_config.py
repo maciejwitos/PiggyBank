@@ -43,3 +43,16 @@ class ViewBudgets(LoginRequiredMixin, View):
             date__month=date_search.month).filter(
             date__year=date_search.year)
         return render(request, 'budget/budget_all.html', {'budgets': budgets})
+
+
+class DeleteBudget(LoginRequiredMixin, DeleteView):
+
+    login_url = '/login/'
+
+    model = Budget
+    success_url = '/budgets/all/'
+
+    def get(self, request, *args, **kwargs):
+        if Budget.objects.get(id=kwargs['pk']).user.pk == request.user.pk:
+            return super().get(request, *args, **kwargs)
+        return redirect('/404/')
