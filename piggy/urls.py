@@ -66,6 +66,8 @@ urlpatterns = [
 
     path('budget/add/', AddBudget.as_view(), name='add-budget'),
     path('budget/all/', ViewBudgets.as_view(), name='all-budget'),
-    path('budget/delete/<pk>/', DeleteBudget.as_view(template_name='confirm_delete.html', success_url='/budget/all/'), name='delete-budget')
+    path('budget/delete/<pk>/', DeleteBudget.as_view(template_name='confirm_delete.html', success_url='/budget/all/'),
+         name='delete-budget'),
+    path('budget/edit/<pk>/', EditBudget.as_view(template_name='budget/budget_edit.html'), name='account-edit'),
 
 ]

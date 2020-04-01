@@ -1,5 +1,8 @@
 import datetime
 from datetime import date
+
+from django.views.generic import UpdateView
+
 from app.budgets.budgets_form import *
 from app.user.user_config import *
 
@@ -43,6 +46,19 @@ class ViewBudgets(LoginRequiredMixin, View):
             date__month=date_search.month).filter(
             date__year=date_search.year)
         return render(request, 'budget/budget_all.html', {'budgets': budgets})
+
+
+class EditBudget(LoginRequiredMixin, UpdateView):
+
+    login_url = '/login/'
+    model = Budget
+    fields = ('category', 'budget', 'date', 'expenses')
+    success_url = '/budget/all/'
+
+    def get(self, request, *args, **kwargs):
+        if Budget.objects.get(id=kwargs['pk']).user.pk == request.user.pk:
+            return super().get(request, *args, **kwargs)
+        return redirect('/404/')
 
 
 class DeleteBudget(LoginRequiredMixin, DeleteView):
