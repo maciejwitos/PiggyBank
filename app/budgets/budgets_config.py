@@ -48,6 +48,16 @@ class ViewBudgets(LoginRequiredMixin, View):
         return render(request, 'budget/budget_all.html', {'budgets': budgets})
 
 
+class DetailsBudget(LoginRequiredMixin, View):
+    login_url = '/login/'
+
+    def get(self, request, pk):
+        budget = Budget.objects.get(id=pk)
+        if not request.user.pk == budget.user.pk:
+            return redirect('/404/')
+        return render(request, 'budget/budget_details.html', {'budget': budget})
+
+
 class EditBudget(LoginRequiredMixin, UpdateView):
 
     login_url = '/login/'
