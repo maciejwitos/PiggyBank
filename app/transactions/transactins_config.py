@@ -36,15 +36,17 @@ class AddTransaction(LoginRequiredMixin, View):
             category = form.cleaned_data['category']
             category.spending += amount
             category.save()
-
-            budgets = Budget.objects.filter(
-                user=request.user).filter(
-                category=category).filter(
-                date__month=date.today().month).filter(
-                date__year=date.today().year)
-            budget = Budget.objects.get(id=budgets[0].id)
-            budget.expenses += amount
-            budget.save()
+            try:
+                budgets = Budget.objects.filter(
+                    user=request.user).filter(
+                    category=category).filter(
+                    date__month=date.today().month).filter(
+                    date__year=date.today().year)
+                budget = Budget.objects.get(id=budgets[0].id)
+                budget.expenses += amount
+                budget.save()
+            except IndexError:
+                pass
 
             return redirect('/transaction/all/')
 
