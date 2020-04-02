@@ -3,12 +3,15 @@
 {% block content %}
     <div class="col-12">
         <div class="card">
-            <table>
+        <div class="card-header">
+            <table class="table table-sm">
                 <tr>
                     <th>Nazwa</th>
                     <th>Bank</th>
                     <th>Stan konta</th>
                     <th>Waluta</th>
+                    <th></th>
+                    <th></th>
                 </tr>
                 <tr>
                     <td>{{ account.name }}</td>
@@ -20,6 +23,7 @@
                 </tr>
 
             </table>
+        </div>
 
 
             <!-- /.card-header -->
