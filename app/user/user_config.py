@@ -1,14 +1,4 @@
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.views import PasswordResetView
-from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
-from django.views import View
-from django.views.generic import CreateView, DeleteView, FormView
-from app.forms import SignUpForm
-from app.models import *
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.views.generic.edit import DeletionMixin
-from django.http import HttpResponse
+from app.views import *
 
 
 class SignUp(View):

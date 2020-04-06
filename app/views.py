@@ -1,6 +1,24 @@
-from app.user.user_config import *
 from django.db.models import Q
 from app.currency.scraper.currency_scraper import *
+from django.views.generic import UpdateView
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.views import PasswordResetView
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.views import View
+from django.views.generic import CreateView, DeleteView, FormView
+from app.forms import SignUpForm
+from app.models import *
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.views.generic.edit import DeletionMixin
+from django.http import HttpResponse
+from app.accounts.accounts_forms import *
+import datetime
+from app.budgets.budgets_form import *
+from app.category.category_forms import *
+from app.currency.currency_form import *
+from app.transactions.transaction_form import AddTransactionForm
+from decimal import Decimal
 
 
 class Dashboard(LoginRequiredMixin, View):

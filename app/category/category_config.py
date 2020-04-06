@@ -1,7 +1,4 @@
-from django.views.generic import UpdateView
-
-from app.user.user_config import *
-from app.category.category_forms import *
+from app.views import *
 
 
 class AddCategory(LoginRequiredMixin, View):

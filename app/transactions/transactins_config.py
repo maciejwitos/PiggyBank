@@ -1,10 +1,4 @@
-from datetime import date
-from decimal import Decimal
-
-from django.views.generic import UpdateView
-
-from app.transactions.transaction_form import AddTransactionForm
-from app.user.user_config import *
+from app.views import *
 
 
 # Dodawanie transakcji

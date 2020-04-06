@@ -1,10 +1,4 @@
-import datetime
-from datetime import date
-
-from django.views.generic import UpdateView
-
-from app.budgets.budgets_form import *
-from app.user.user_config import *
+from app.views import *
 
 
 class AddBudget(LoginRequiredMixin, View):

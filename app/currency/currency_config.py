@@ -1,6 +1,4 @@
-from django.views.generic import UpdateView
-from app.user.user_config import *
-from app.currency.currency_form import *
+from app.views import *
 
 
 class AddCurrency(PermissionRequiredMixin, View):
