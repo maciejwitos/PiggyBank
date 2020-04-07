@@ -19,6 +19,12 @@ from app.category.category_forms import *
 from app.currency.currency_form import *
 from app.transactions.transaction_form import AddTransactionForm
 from decimal import Decimal
+from app.user.user_config import *
+from app.budgets.budgets_config import *
+from app.category.category_config import *
+from app.accounts.accounts_config import *
+from app.transactions.transactins_config import *
+from app.currency.currency_config import *
 
 
 class Dashboard(LoginRequiredMixin, View):

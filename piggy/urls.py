@@ -1,13 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
-
-from app.accounts.accounts_config import *
-from app.category.category_config import *
-from app.currency.currency_config import *
-from app.budgets.budgets_config import *
-from app.transactions.transactins_config import *
-from app.views import *
 from django.contrib.auth import views as auth_views
+from app.views import *
 
 urlpatterns = [
 
