@@ -6,6 +6,8 @@ Is an app to manage you home budget with maximum customisation. Just create acco
 - add transactions
 - categories
 - accounts in various currencies
+- create and plan you monthly budgets for each category
+
 
 ## Technology
 
