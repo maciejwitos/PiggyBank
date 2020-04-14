@@ -1,5 +1,11 @@
 * still in develop 
 
+## available to test!
+
+shorturl.at/jsQY5
+
+AWS Hosting and database
+
 # PiggyBank
 
 Is an app to manage you home budget with maximum customisation. Just create account and start using it. 
@@ -8,9 +14,7 @@ Is an app to manage you home budget with maximum customisation. Just create acco
 - accounts in various currencies
 - create and plan you monthly budgets for each category
 
-
 ## Technology
-
 
 ```bash
 python3
@@ -18,15 +22,17 @@ django 2.2.7
 ```
 ## Requirements
 
-
 ```bash
-python3
-django 2.2.7
-pytest
-Faker
-psycopg2-binary	2.8.4
+django==3.0.5
+beautifulscraper==1.1.1
+selenium==3.141.0
+urllib3==1.25.8
+pytz==2019.3
+asgiref==3.2.7
+setuptools==40.8.0
+sqlparse==0.3.1
+psycopg2-binary==2.8.5
 ```
-
 ## As front end
 
 I've used BootStrap Admin LTE.
