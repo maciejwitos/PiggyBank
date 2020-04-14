@@ -2,7 +2,7 @@
 
 ## available to test!
 
-[Check how it works!](http://http://ec2-54-93-113-71.eu-central-1.compute.amazonaws.com/)
+[Check how it works!](http://ec2-54-93-113-71.eu-central-1.compute.amazonaws.com/)
 
 
 AWS Hosting and database
