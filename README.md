@@ -2,7 +2,7 @@
 
 ## available to test!
 
-[Check how it's work!](shorturl.at/jsQY5)
+[Check how it works!](http://shorturl.at/jsQY5)
 
 
 AWS Hosting and database
